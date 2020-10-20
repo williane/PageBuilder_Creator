@@ -64,15 +64,20 @@ function CreatePagebuilder() {
           <Linha />
           <DivTag hidden = {name.resource ? "Exibir" : ""}>
             <InputTag value={name.resource} readOnly type="text" />
-            <ButtonEdit>Edit</ButtonEdit>
+            <ButtonEdit type="Button">Edit</ButtonEdit>
+            <ButtonEdit type="Button">Delete</ButtonEdit>
             <InputTag value={name.actionlist} readOnly type="text" />
-            <ButtonEdit>Edit</ButtonEdit>
+            <ButtonEdit type="Button">Edit</ButtonEdit>
+            <ButtonEdit type="Button">Delete</ButtonEdit>
             <InputTag value={name.actionedit} readOnly type="text" />
-            <ButtonEdit>Edit</ButtonEdit>
+            <ButtonEdit type="Button">Edit</ButtonEdit>
+            <ButtonEdit type="Button">Delete</ButtonEdit>
             <InputTag value={name.mcmdlist} readOnly type="text" />
-            <ButtonEdit>Edit</ButtonEdit>
+            <ButtonEdit type="Button">Edit</ButtonEdit>
+            <ButtonEdit type="Button">Delete</ButtonEdit>
             <InputTag value={name.mcmdedit} readOnly type="text" />
-            <ButtonEdit>Edit</ButtonEdit>
+            <ButtonEdit type="Button">Edit</ButtonEdit>
+            <ButtonEdit type="Button">Delete</ButtonEdit>
           </DivTag>
         </FieldSet>
       </Form>

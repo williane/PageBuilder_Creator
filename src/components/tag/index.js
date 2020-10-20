@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const DivTag = styled.div`
     display: grid;
-    grid-template-columns: 5fr 1fr;
+    grid-template-columns: 8fr 1fr 1fr;
     column-gap: 2%;
 
     ${({hidden})=>{
