@@ -1,48 +1,53 @@
 import React, { useState } from 'react';
-import { Aside, CreateDiv, FieldSet, Form, Legend, Linha, FormFieldInput } from '../components/form-pagebuilder';
+import { useHistory } from 'react-router-dom'
+import { Aside, CreateDiv, FieldSet, Form, Legend, Linha, FormFieldInput, ButtonNext, InputWrapper } from '../components/form-pagebuilder';
 import { Button, Image } from '../components/page-landing';
 import Logo from '../assets/images/logo-short.svg';
 import Arrow from '../assets/images/arrow-back.svg';
 import { ButtonEdit, DivTag, InputTag } from '../components/tag';
+import PageBuilderRepositories from '../repositories/pagebuilder.js';
 
 
 function CreatePagebuilder() {
-
+  const history = useHistory();
   const [pageBuilder, setPageBuilder] = useState([]);
   const [name, setName] = useState([]);
 
-   function setValues(chave, valor) {
+  function setValues(chave, valor) {
     setPageBuilder({
       ...pageBuilder,
       [chave]: valor, // deixa a chave dinâmica
     });
-
   }
 
   const handleChange = (event) => {
     setValues(event.target.getAttribute('name'), event.target.value);
-    console.log(event.target.getAttribute('name'));
-    if(event.target.getAttribute('name') == 'nome'){
-      setName({
-        resource: `dhl${event.target.value}`,
-        actionlist: `dhlactList${event.target.value}`,
-        actionedit: `dhlactEdit${event.target.value}`,
-        mcmdlist: `dhl_list_${event.target.value}`,
-        mcmdedit: `dhl_edit_${event.target.value}`,
-      });
-      if(!event.target.value){
-        setName({
-          resource: ``,
-          actionlist: ``,
-          actionedit: ``,
-          mcmdlist: ``,
-          mcmdedit: ``,
-        });
+    if (event.target.getAttribute('name') == 'nome') {
+      setName([
+        `dhl${event.target.value}.resource`,
+        `dhlactList${event.target.value}.list.action`,
+         `dhlactEdit${event.target.value}.edit.action`,
+        `dhlactAdd${event.target.value}.add.action`,
+        `dhlactDelete${event.target.value}.delete.action`,
+        `dhl_list_${event.target.value}.mcmd`,
+        `dhl_edit_${event.target.value}.mcmd`,
+        `dhl_add_${event.target.value}.mcmd`,
+        `dhl_delete_${event.target.value}.mcmd`,
+      ]);
+      if (!event.target.value) {
+        setName([]);
       }
     }
   };
 
-
+  const handleDelete = (event) => {
+    const comandos = name.filter((n)=> {
+      return !(n == event.target.getAttribute('name'));
+    });
+    setName(
+      [...comandos]      
+    )
+  }
 
   return (
     <CreateDiv>
@@ -52,7 +57,18 @@ function CreatePagebuilder() {
           <Image src={Arrow} />
         </Button>
       </Aside>
-      <Form>
+      <Form onSubmit={(event) => {
+        event.preventDefault();
+        console.log(pageBuilder);
+        PageBuilderRepositories.create({
+          nome: pageBuilder.nome,
+          descricao: pageBuilder.descricao,
+          comandos: [...name]
+        }).then(() => {
+          console.log('cadastrado com sucesso :)!')
+          history.push('/Editor');
+        });
+      }}>
         <FieldSet>
           <Legend>Dados Gerais</Legend>
           <Linha />
@@ -62,24 +78,20 @@ function CreatePagebuilder() {
         <FieldSet>
           <Legend>Actions & Commands</Legend>
           <Linha />
-          <DivTag hidden = {name.resource ? "Exibir" : ""}>
-            <InputTag value={name.resource} readOnly type="text" />
-            <ButtonEdit type="Button">Edit</ButtonEdit>
-            <ButtonEdit type="Button">Delete</ButtonEdit>
-            <InputTag value={name.actionlist} readOnly type="text" />
-            <ButtonEdit type="Button">Edit</ButtonEdit>
-            <ButtonEdit type="Button">Delete</ButtonEdit>
-            <InputTag value={name.actionedit} readOnly type="text" />
-            <ButtonEdit type="Button">Edit</ButtonEdit>
-            <ButtonEdit type="Button">Delete</ButtonEdit>
-            <InputTag value={name.mcmdlist} readOnly type="text" />
-            <ButtonEdit type="Button">Edit</ButtonEdit>
-            <ButtonEdit type="Button">Delete</ButtonEdit>
-            <InputTag value={name.mcmdedit} readOnly type="text" />
-            <ButtonEdit type="Button">Edit</ButtonEdit>
-            <ButtonEdit type="Button">Delete</ButtonEdit>
-          </DivTag>
+          <InputWrapper>
+            {name.map((n, index) => {
+              const key = `button_${index}`;
+              
+              return (
+                <DivTag key={key}> 
+                  <InputTag value={n} readOnly type="text" />
+                  <ButtonEdit type="Button" name={n} onClick={handleDelete}>Delete</ButtonEdit>
+                </DivTag>
+              )
+            })}
+          </InputWrapper>
         </FieldSet>
+        <ButtonNext>Next</ButtonNext>
       </Form>
     </CreateDiv>
   );

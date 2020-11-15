@@ -54,7 +54,7 @@ export const Aside = styled.aside`
 
 export const Form = styled.form`
   width: 60vw;
-  margin: 6.4rem auto;
+  margin: 2.4rem auto;
   background: white;
   border: 1px solid #d3e2e5;
   border-radius: 2rem;
@@ -78,7 +78,7 @@ export const Legend = styled.legend`
 export const Linha = styled.hr`
 `;
 
-const InputWrapper = styled.div`
+export const InputWrapper = styled.div`
 `;
 
 const Label = styled.label`
@@ -114,10 +114,24 @@ export function FormFieldInput({ label, name, handleChange, type })
         <InputWrapper>
             <Label htmlFor={fieldId}>
                 <Label.text>{label}:</Label.text>
-                <Input onChange={handleChange} name={name} type={type}/>
+                <Input onChange={handleChange} name={name} type={type} required/>
             </Label>            
         </InputWrapper>
     );
 }
+
+export const ButtonNext = styled.button`
+    width: 100%;
+    height: 3.4rem;
+    border: none;
+    background: #27ae60;
+    margin-top: 2.4rem;
+    border-radius:5px;
+    
+    transition: background .3s;
+    &:hover{
+        background: #2ecc71;
+    }
+`;
 
 

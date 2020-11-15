@@ -1,0 +1,20 @@
+{
+  "pagebuilders": [
+    {
+      "nome": "confgBlckSts",
+      "descricao": "Configurar bloqueio de status",
+      "comandos": [
+        "dhlconfgBlckSts.resource",
+        "dhlactListconfgBlckSts.list.action",
+        "dhlactEditconfgBlckSts.edit.action",
+        "dhlactAddconfgBlckSts.add.action",
+        "dhlactDeleteconfgBlckSts.delete.action",
+        "dhl_list_confgBlckSts.mcmd",
+        "dhl_edit_confgBlckSts.mcmd",
+        "dhl_add_confgBlckSts.mcmd",
+        "dhl_delete_confgBlckSts.mcmd"
+      ],
+      "id": 1
+    }
+  ]
+}

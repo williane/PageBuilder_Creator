@@ -2,14 +2,14 @@ import styled, { css } from 'styled-components';
 
 export const DivTag = styled.div`
     display: grid;
-    grid-template-columns: 8fr 1fr 1fr;
+    grid-template-columns: 8fr 1fr;
     column-gap: 2%;
 
-    ${({hidden})=>{
+    /* ${({hidden})=>{
         return !hidden && css`
             display: none;
         `;
-    }};
+    }}; */
 `;
 
 
@@ -36,4 +36,16 @@ export const ButtonEdit = styled.button`
     width: 100%;
     height: 3.9rem;
 
+`;
+
+export const Textarea = styled.textarea`
+    grid-column-start: 1;
+    grid-column-end: 4;
+    margin-top: 1.5rem;
+    padding: 2.4rem;
+    resize: none;
+
+    ${({hidden})=>{
+       return hidden && css`display: none;`;
+    }}    
 `;
